@@ -10,10 +10,6 @@ add_definitions(-std=c++14 -Wall -Wextra)
 # LIBRARIES #
 #############
 cs_add_library(${PROJECT_NAME}
-  src/esdf_server.cc
-  src/interactive_slider.cc
-  src/simulation_server.cc
-  src/intensity_server.cc
   src/transformer.cc
   src/tsdf_server.cc
 )
@@ -22,30 +18,11 @@ cs_add_library(${PROJECT_NAME}
 # BINARIES #
 ############
 
-cs_add_executable(voxblox_eval
-  src/voxblox_eval.cc
-)
-target_link_libraries(voxblox_eval ${PROJECT_NAME})
-
 cs_add_executable(tsdf_server
   src/tsdf_server_node.cc
 )
 target_link_libraries(tsdf_server ${PROJECT_NAME})
 
-cs_add_executable(esdf_server
-  src/esdf_server_node.cc
-)
-target_link_libraries(esdf_server ${PROJECT_NAME})
-
-cs_add_executable(intensity_server
-  src/intensity_server_node.cc
-)
-target_link_libraries(intensity_server ${PROJECT_NAME})
-
-cs_add_executable(simulation_eval
-  src/simulation_eval.cc
-)
-target_link_libraries(simulation_eval ${PROJECT_NAME})
 
 cs_add_executable(visualize_tsdf
   src/visualize_tsdf.cc

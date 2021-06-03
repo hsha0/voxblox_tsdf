@@ -1,6 +1,6 @@
 <launch>
   <arg name="play_bag" default="true" />
-  <arg name="bag_file" default="/path/to/data.bag"/>
+  <arg name="bag_file" default="/home/hshao/catkin_ws/data/data.bag"/>
   <arg name="voxel_size" default="0.05"/>
 
   <!-- Download the dataset here: https://projects.asl.ethz.ch/datasets/doku.php?id=iros2017 -->
@@ -23,6 +23,8 @@
     <remap from="transform" to="/kinect/vrpn_client/estimated_transform" />
     <rosparam file="$(find voxblox_ros)/cfg/cow_and_lady.yaml"/>
     <param name="mesh_filename" value="$(find voxblox_ros)/mesh_results/$(anon cow).ply" />
+    <param name="publish_slices" value="true" />
+    <param name="publish_pointclouds" value="true" />
   </node>
 
 </launch>

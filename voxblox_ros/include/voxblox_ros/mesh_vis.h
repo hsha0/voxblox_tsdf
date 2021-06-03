@@ -31,7 +31,6 @@
 #include <visualization_msgs/Marker.h>
 
 #include <voxblox/core/common.h>
-#include <voxblox/integrator/esdf_integrator.h>
 #include <voxblox/integrator/tsdf_integrator.h>
 #include <voxblox/mesh/mesh.h>
 #include <voxblox/mesh/mesh_layer.h>

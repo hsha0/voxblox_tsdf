@@ -4,9 +4,7 @@
 #include <ros/node_handle.h>
 
 #include <voxblox/alignment/icp.h>
-#include <voxblox/core/esdf_map.h>
 #include <voxblox/core/tsdf_map.h>
-#include <voxblox/integrator/esdf_integrator.h>
 #include <voxblox/integrator/tsdf_integrator.h>
 #include <voxblox/mesh/mesh_integrator.h>
 
@@ -113,57 +111,6 @@ inline TsdfIntegratorBase::Config getTsdfIntegratorConfigFromRosParam(
   integrator_config.max_weight = static_cast<float>(max_weight);
 
   return integrator_config;
-}
-
-inline EsdfMap::Config getEsdfMapConfigFromRosParam(
-    const ros::NodeHandle& nh_private) {
-  EsdfMap::Config esdf_config;
-
-  const TsdfMap::Config tsdf_config = getTsdfMapConfigFromRosParam(nh_private);
-  esdf_config.esdf_voxel_size = tsdf_config.tsdf_voxel_size;
-  esdf_config.esdf_voxels_per_side = tsdf_config.tsdf_voxels_per_side;
-
-  return esdf_config;
-}
-
-inline EsdfIntegrator::Config getEsdfIntegratorConfigFromRosParam(
-    const ros::NodeHandle& nh_private) {
-  EsdfIntegrator::Config esdf_integrator_config;
-
-  TsdfIntegratorBase::Config tsdf_integrator_config =
-      getTsdfIntegratorConfigFromRosParam(nh_private);
-
-  esdf_integrator_config.min_distance_m =
-      tsdf_integrator_config.default_truncation_distance / 2.0;
-
-  nh_private.param("esdf_euclidean_distance",
-                   esdf_integrator_config.full_euclidean_distance,
-                   esdf_integrator_config.full_euclidean_distance);
-  nh_private.param("esdf_max_distance_m", esdf_integrator_config.max_distance_m,
-                   esdf_integrator_config.max_distance_m);
-  nh_private.param("esdf_min_distance_m", esdf_integrator_config.min_distance_m,
-                   esdf_integrator_config.min_distance_m);
-  nh_private.param("esdf_default_distance_m",
-                   esdf_integrator_config.default_distance_m,
-                   esdf_integrator_config.default_distance_m);
-  nh_private.param("esdf_min_diff_m", esdf_integrator_config.min_diff_m,
-                   esdf_integrator_config.min_diff_m);
-  nh_private.param("clear_sphere_radius",
-                   esdf_integrator_config.clear_sphere_radius,
-                   esdf_integrator_config.clear_sphere_radius);
-  nh_private.param("occupied_sphere_radius",
-                   esdf_integrator_config.occupied_sphere_radius,
-                   esdf_integrator_config.occupied_sphere_radius);
-  nh_private.param("esdf_add_occupied_crust",
-                   esdf_integrator_config.add_occupied_crust,
-                   esdf_integrator_config.add_occupied_crust);
-  if (esdf_integrator_config.default_distance_m <
-      esdf_integrator_config.max_distance_m) {
-    esdf_integrator_config.default_distance_m =
-        esdf_integrator_config.max_distance_m;
-  }
-
-  return esdf_integrator_config;
 }
 
 inline MeshIntegratorConfig getMeshIntegratorConfigFromRosParam(
